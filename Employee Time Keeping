@@ -1,0 +1,252 @@
+using System;
+using System.Security.Principal;
+
+namespace Camarillo_Rosal
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int time_in1, time_out1, time_in2, time_out2, min1, min2, min3, min4;
+            
+            Console.WriteLine("==========EMPLOYEE TIME KEEPING ========== \n");
+
+            Console.WriteLine("TIME IN: AM");
+            Console.Write("Hour: ");
+            time_in1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Min: ");
+            min1 = Convert.ToInt32(Console.ReadLine());
+
+
+            if (time_in1 <= 8 && min1 <= 30)
+            {
+                Console.WriteLine("Time-in Early\n\n");
+            }
+            else
+            {
+                Console.WriteLine("Time-in Late\n\n");
+            }
+
+            Console.WriteLine("TIME OUT: NN");
+            Console.Write("Hour: ");
+            time_out1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Min: ");
+            min2 = Convert.ToInt32(Console.ReadLine());
+
+            if (time_out1 < 12 && min2 <= 59)
+            {
+                Console.WriteLine("Time-out: Lunch Early\n\n");
+            }
+            else
+            {
+                Console.WriteLine("Time-out: Enjoy your lunch\n\n");
+            }
+
+
+            // Worked Hours AM - NN
+            int worked_hours = time_out1 - time_in1 - 1; 
+            int ans1 = 60 - min1; 
+
+
+            int answer = ans1 + min2; 
+
+            Console.WriteLine("========== WORKING HOURS: Morning ==========\n");
+            if (answer == 60)
+            {
+                worked_hours += 1;
+                Console.WriteLine("            {0} hours\n", worked_hours);
+            }
+            else if (answer >= 61)
+            {
+                worked_hours += 1;
+                answer -= 60;
+                Console.WriteLine("            {0} hours and {1} mins\n", worked_hours, answer);
+
+            }
+            else
+            {
+                Console.WriteLine("            {0} hours and {1} mins\n", worked_hours, answer);
+            }
+            Console.WriteLine("============================================\n");
+
+            Console.WriteLine("TIME IN: PM");
+            Console.Write("Hour: ");
+            time_in2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Min: ");
+            min3 = Convert.ToInt32(Console.ReadLine());
+
+
+            if (time_in2 <= 1 && min3 <= 30)
+            {
+                Console.WriteLine("Time-in Early\n\n");
+            }
+            else
+            {
+                Console.WriteLine("Time-in Late\n\n");
+            }
+
+            Console.WriteLine("TIME OUT: PM");
+            Console.Write("Hour: ");
+            time_out2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Min: ");
+            min4 = Convert.ToInt32(Console.ReadLine());
+
+            if (time_out2 < 5 && min4 <= 59)
+            {
+                Console.WriteLine("Time-out early\n\n");
+            }
+            else
+            {
+                Console.WriteLine("Time-out\n\n");
+            }
+
+            // Worked Hours PM
+            int worked_hours1 = time_out2 - time_in2 - 1; 
+            int ans3 = 60 - min3;
+
+
+            int answer1 = ans3 + min4; 
+
+
+            Console.WriteLine("========== WORKING HOURS: Afternoon ==========\n");
+            if (answer1 == 60)
+            {
+                worked_hours1 += 1;
+                Console.WriteLine("            {0} hours\n", worked_hours1);
+            }
+            else if (answer1 >= 61)
+            {
+                worked_hours1 += 1;
+                answer1 -= 60;
+                Console.WriteLine("            {0} hours and {1} mins\n", worked_hours1, answer1);
+            }
+            else
+            {
+                Console.WriteLine("            {0} hours and {1} mins\n", worked_hours1, answer1);
+            }
+            Console.WriteLine("=============================================\n");
+
+            
+
+            // Worked hours
+            int total_hours = worked_hours + worked_hours1 - 1;
+            int total_mins = answer + answer1;
+
+            if (total_mins == 120)
+            {
+                total_mins -= 120;
+                Console.WriteLine("            Worked Hours: {0} hours", total_hours + 1);
+            }
+            else if (total_mins >= 90 && total_mins <= 119) {
+                total_mins -= 60;
+                total_hours += 1;
+                if (total_hours >= 8)
+                {
+                    if (total_mins >= 60)
+                    {
+                        total_mins = 60 - total_mins;
+                        total_hours++;
+                        Console.WriteLine("            Worked Hours: {0} hours and {1} mins", total_hours , total_mins);
+                    }
+                    else
+                    {
+                        Console.WriteLine("            Worked Hours: {0} hours and {1} mins", total_hours +1, total_mins);
+                    }
+
+                }
+               
+
+            }
+            else if (total_mins >= 61 && total_mins <= 89)
+            {
+                total_mins -= 60;
+                total_hours += 1;
+                if (total_hours >= 8 )
+                    if (total_mins >= 60)
+                    {
+                        total_mins = 60 - total_mins;
+                        total_hours++;
+                        Console.WriteLine("            Worked Hours: {0} hours and {1} mins", total_hours, total_mins);
+                    }
+                    else
+                    {
+                        Console.WriteLine("            Worked Hours: {0} hours and {1} mins", total_hours+1, total_mins);
+                    }
+
+              
+            }
+            else if (total_mins <= 59)
+            {
+                total_hours += 1;
+                Console.WriteLine("            Worked Hours: {0} hours and {1} mins", total_hours, total_mins);
+            }
+            else
+            {
+                total_hours += 1;
+                Console.WriteLine("            Worked Hours: {0} hours", total_hours);
+            }
+
+            // Undertime Hours w/ mins 
+
+            if (total_hours < 8)
+            {
+                total_hours = 8 - total_hours -1;
+                total_mins = 60 - total_mins;
+                if (total_mins == 60)
+                {
+                    total_mins -= 60;
+                    Console.WriteLine("            Undertime Hours: {0} hour ", total_hours);
+                }
+                else
+                {
+                    Console.WriteLine("            Undertime Hours: {0} hours and {1} mins", total_hours, total_mins);
+                }
+            }
+            else
+            {
+                Console.WriteLine("            Undertime Hours: 0");
+            }
+
+            // Overtime Hours W / mins
+            if (time_out2 >= 6)
+            {
+                time_out2 -= 5;
+                Console.WriteLine("          Overtime Hours: {0} hours and {1}", time_out2 - 1, total_mins);
+
+            }
+            else {
+                Console.WriteLine("          Overtime Hours: 0");
+            }
+
+            // Late 
+            time_in1 -= 8;
+            time_in2 -= 8;
+
+            if (min1 > 30 && min3 > 30)
+            {
+                min1 -= 30;
+                min3 -= 30;
+
+                int final_min = min1 + min3;
+                Console.WriteLine("            Late Mins: {0} mins", final_min);
+            }
+            else if (min1 > 30) {
+
+                min1 -= 30;
+                Console.WriteLine("            Late Mins: {0} mins", min1);
+
+            }
+            else if (min3 > 30)
+            {     
+                min3 -= 30;
+                Console.WriteLine("            Late Mins: {0} mins", min3);
+                }
+            else
+            {
+                Console.WriteLine("            Late Mins: 0");
+            }
+
+        }
+    }
+}
